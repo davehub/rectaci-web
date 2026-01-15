@@ -12,7 +12,6 @@
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #FFFFFF;
             scroll-behavior: smooth;
         }
         .primary-color {
@@ -51,486 +50,244 @@
         .orange-gradient {
             background: linear-gradient(to right, #F78E05, #DDA246);
         }
-        .orange-gradient-light {
-            background: linear-gradient(135deg, #FFB74D 0%, #FF9800 100%);
-        }
-        .service-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
         .contact-btn {
             background: linear-gradient(to right, #F78E05, #DDA246);
         }
         .contact-btn:hover {
             background: linear-gradient(to right, #e07f04, #c8943e);
         }
-        .border-primary {
-            border-color: #F78E05;
-        }
-        .border-success {
-            border-color: #5AA06C;
-        }
-        .highlight-badge {
-            background: linear-gradient(135deg, #F78E05 0%, #DDA246 100%);
-            box-shadow: 0 10px 15px -3px rgba(247, 142, 5, 0.3);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 10px 15px -3px rgba(247, 142, 5, 0.3);
-            }
-            50% {
-                box-shadow: 0 10px 25px -3px rgba(247, 142, 5, 0.5);
-            }
-            100% {
-                box-shadow: 0 10px 15px -3px rgba(247, 142, 5, 0.3);
-            }
-        }
-        /* Styles améliorés pour le carrousel - RESPONSIVE */
+        
+        /* Carrousel optimisé pour mobile */
         .carousel-container {
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            min-height: auto;
             height: auto;
-            min-height: 600px;
         }
-        @media (min-width: 768px) {
+        
+        /* Sur desktop, hauteur fixe */
+        @media (min-width: 1024px) {
             .carousel-container {
-                height: 680px;
+                height: 550px;
+                overflow: hidden;
             }
         }
-        @media (max-width: 767px) {
+        
+        /* Sur mobile, contenu scrollable */
+        @media (max-width: 1023px) {
             .carousel-container {
-                min-height: 800px;
+                min-height: 600px;
                 height: auto;
+                overflow-y: auto;
             }
-        }
-        @media (max-width: 640px) {
-            .carousel-container {
-                min-height: 900px;
+            
+            .hero-slide {
+                position: relative;
+                opacity: 1;
+                height: auto;
+                min-height: 600px;
+                margin-bottom: 0;
+                display: none;
             }
-        }
-        .hero-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            z-index: 1;
-        }
-        .hero-slide.active {
-            opacity: 1;
-            z-index: 2;
-        }
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            position: absolute;
-            bottom: 40px;
-            left: 0;
-            right: 0;
-            z-index: 30;
-        }
-        @media (max-width: 640px) {
+            
+            .hero-slide.active {
+                display: block;
+                opacity: 1;
+            }
+            
+            /* Permet de voir toute la bannière en scrollant */
+            .slide-content {
+                padding: 20px 0;
+                min-height: 550px;
+            }
+            
             .carousel-dots {
-                bottom: 20px;
+                position: relative;
+                bottom: auto;
+                margin-top: 20px;
+                padding: 15px 0;
+                background: rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
             }
         }
+        
+        /* Version desktop */
+        @media (min-width: 1024px) {
+            .hero-slide {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                transition: opacity 0.5s ease;
+                z-index: 1;
+            }
+            .hero-slide.active {
+                opacity: 1;
+                z-index: 2;
+            }
+            
+            .carousel-dots {
+                position: absolute;
+                bottom: 20px;
+                left: 0;
+                right: 0;
+                z-index: 30;
+            }
+        }
+        
         .carousel-dot {
-            width: 14px;
-            height: 14px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background-color: rgba(255, 255, 255, 0.5);
-            margin: 0 10px;
+            margin: 0 6px;
             cursor: pointer;
             transition: all 0.3s;
-            border: 2px solid transparent;
         }
         .carousel-dot.active {
             background-color: #F78E05;
             transform: scale(1.3);
-            border-color: white;
         }
-        .carousel-dot:hover {
-            background-color: rgba(247, 142, 5, 0.8);
-        }
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.4);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 30;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
-        }
-        .carousel-nav:hover {
-            background-color: rgba(247, 142, 5, 0.8);
-            transform: translateY(-50%) scale(1.1);
-        }
-        .carousel-nav.prev {
-            left: 30px;
-        }
-        .carousel-nav.next {
-            right: 30px;
-        }
-        @media (max-width: 768px) {
-            .carousel-nav {
-                width: 50px;
-                height: 50px;
-                display: none; /* Cacher sur mobile pour plus de simplicité */
-            }
-            .carousel-nav.prev {
-                left: 15px;
-            }
-            .carousel-nav.next {
-                right: 15px;
-            }
-        }
-        @media (min-width: 769px) {
-            .carousel-nav {
-                display: flex;
-            }
-        }
-        /* Amélioration de la lisibilité */
-        .slide-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            padding: 40px 20px;
-        }
-        @media (max-width: 640px) {
-            .slide-content {
-                padding: 20px 15px;
-                align-items: flex-start;
-                padding-top: 40px;
-            }
-        }
-        .slide-text {
-            padding: 40px 0;
-        }
-        @media (max-width: 768px) {
-            .slide-text {
-                padding: 20px 0;
-            }
-        }
-        .stat-number {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-        @media (max-width: 640px) {
-            .stat-number {
-                font-size: 2.5rem;
-            }
-        }
-        /* Animation pour les éléments de slide */
-        .slide-in-left {
-            animation: slideInLeft 0.8s ease-out;
-        }
-        .slide-in-right {
-            animation: slideInRight 0.8s ease-out;
-        }
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        /* Effet de parallaxe pour les slides */
-        .parallax-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-        }
-        .slide-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-        }
-        .slide-foreground {
-            position: relative;
-            z-index: 3;
-        }
-        /* Amélioration des boutons - RESPONSIVE */
-        .btn-primary {
-            padding: 16px 32px;
-            font-weight: 600;
-            border-radius: 12px;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            width: 100%;
-        }
-        @media (min-width: 480px) {
-            .btn-primary {
-                width: auto;
-            }
-        }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
-        }
-        @media (max-width: 480px) {
-            .btn-primary {
-                padding: 14px 20px;
-                font-size: 0.9rem;
-            }
-        }
-        /* Amélioration des cartes */
-        .feature-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-        @media (max-width: 768px) {
-            .feature-card {
-                margin-top: 30px;
-                padding: 20px;
-            }
-        }
-        /* Ajustements typographiques pour mobile */
+        
+        /* Typographie responsive */
         @media (max-width: 640px) {
             h1 {
-                font-size: 2rem !important;
-                line-height: 1.2 !important;
+                font-size: 1.8rem !important;
+                line-height: 1.3 !important;
             }
             h2 {
-                font-size: 1.8rem !important;
+                font-size: 1.6rem !important;
             }
             h3 {
-                font-size: 1.5rem !important;
+                font-size: 1.3rem !important;
             }
-            p, .text-xl {
-                font-size: 1rem !important;
-            }
-        }
-        @media (max-width: 768px) and (min-width: 641px) {
-            h1 {
-                font-size: 2.5rem !important;
+            .mobile-padding {
+                padding: 15px;
             }
         }
-        /* Ajustements pour les sections */
-        section {
-            padding-top: 3rem;
-            padding-bottom: 3rem;
+        
+        /* Assurer que tout le contenu est visible */
+        .mobile-full-slide {
+            min-height: calc(100vh - 100px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        @media (min-width: 768px) {
-            section {
-                padding-top: 5rem;
-                padding-bottom: 5rem;
-            }
-        }
-        /* Amélioration du formulaire sur mobile */
-        @media (max-width: 768px) {
-            input, select, textarea {
-                font-size: 16px !important; /* Empêche le zoom sur iOS */
-            }
-        }
-        /* Optimisation des marges et paddings sur mobile */
-        @media (max-width: 640px) {
-            .container {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-            .p-8, .p-10, .p-12 {
-                padding: 1.5rem !important;
-            }
-            .space-y-8 > * + * {
-                margin-top: 1.5rem;
-            }
-        }
-        /* Amélioration de la grille des services */
-        .services-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-        @media (min-width: 640px) {
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        @media (min-width: 1024px) {
-            .services-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-        /* Ajustement pour le footer */
-        @media (max-width: 768px) {
-            footer .flex-col {
-                align-items: center;
-                text-align: center;
+        
+        @media (max-width: 1023px) {
+            .mobile-full-slide {
+                min-height: auto;
+                padding: 30px 0;
             }
         }
     </style>
 </head>
 <body class="text-gray-800">
-    <!-- Header & Navigation - RESPONSIVE -->
-    <header class="sticky top-0 z-50 shadow-md bg-white">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                    <!-- Logo RECTA-CI -->
-                    <div class="flex items-center mr-4">
-                        <div class="mr-3 flex items-center justify-center">
-                            <img 
-                                src="assets/image/WhatsApp_Image_2026-01-12_at_15.06.56-removebg-preview.png" 
-                                alt="RECTA-CI Logo" 
-                                class="h-12 md:h-16 w-auto object-contain"
-                                onerror="this.style.display='none'; document.getElementById('text-logo').style.display='flex';"
-                            >
-                        </div>
-                        <div id="text-logo" class="primary-bg text-white p-2 rounded-lg mr-3 flex items-center justify-center hidden">
-                            <div class="text-center">
-                                <div class="logo-text text-xl font-bold">RC</div>
-                                <div class="text-xs mt-0">CI</div>
-                            </div>
+   <!-- Header & Navigation - RESPONSIVE -->
+   <header class="sticky top-0 z-50 shadow-md bg-white">
+    <div class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center">
+                <!-- Logo RECTA-CI -->
+                <div class="flex items-center mr-4">
+                    <div class="mr-3 flex items-center justify-center">
+                        <img 
+                            src="assets/image/WhatsApp_Image_2026-01-12_at_15.06.56-removebg-preview.png" 
+                            alt="RECTA-CI Logo" 
+                            class="h-12 md:h-16 w-auto object-contain"
+                            onerror="this.style.display='none'; document.getElementById('text-logo').style.display='flex';"
+                        >
+                    </div>
+                    <div id="text-logo" class="primary-bg text-white p-2 rounded-lg mr-3 flex items-center justify-center hidden">
+                        <div class="text-center">
+                            <div class="logo-text text-xl font-bold">RC</div>
+                            <div class="text-xs mt-0">CI</div>
                         </div>
                     </div>
                 </div>
-                
-                <button id="mobileMenuBtn" class="lg:hidden secondary-color text-2xl">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
-                <nav class="hidden lg:flex space-x-4 xl:space-x-8">
-                    <a href="#accueil" class="font-semibold primary-color hover:text-orange-600 transition border-b-2 border-transparent hover:border-primary-color py-1 text-sm xl:text-base">Accueil</a>
-                    <a href="#services" class="font-semibold secondary-color hover:primary-color transition border-b-2 border-transparent hover:border-primary-color py-1 text-sm xl:text-base">Services</a>
-                    <a href="#apropos" class="font-semibold secondary-color hover:primary-color transition border-b-2 border-transparent hover:border-primary-color py-1 text-sm xl:text-base">À Propos</a>
-                    <a href="#contact" class="font-semibold secondary-color hover:primary-color transition border-b-2 border-transparent hover:border-primary-color py-1 text-sm xl:text-base">Contact</a>
-                </nav>
             </div>
             
-            <!-- Mobile Menu -->
-            <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-2">
-                <div class="flex flex-col space-y-3">
-                    <a href="#accueil" class="font-semibold primary-color hover:text-orange-600 transition py-2 border-l-4 border-primary-color pl-4">Accueil</a>
-                    <a href="#services" class="font-semibold secondary-color hover:primary-color transition py-2 border-l-4 border-transparent hover:border-primary-color hover:pl-4">Services</a>
-                    <a href="#apropos" class="font-semibold secondary-color hover:primary-color transition py-2 border-l-4 border-transparent hover:border-primary-color hover:pl-4">À Propos</a>
-                    <a href="#contact" class="font-semibold secondary-color hover:primary-color transition py-2 border-l-4 border-transparent hover:border-primary-color hover:pl-4">Contact</a>
-                </div>
+            <button id="mobileMenuBtn" class="lg:hidden secondary-color text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="hidden lg:flex space-x-4 xl:space-x-8">
+                <a href="#accueil" class="font-semibold primary-color hover:text-orange-600 transition border-b-2 border-transparent hover:border-primary-color py-1 text-sm xl:text-base">Accueil</a>
+                <a href="#services" class="font-semibold secondary-color hover:primary-color transition border-b-2 border-transparent hover:border-primary-color py-1 text-sm xl:text-base">Services</a>
+                <a href="#apropos" class="font-semibold secondary-color hover:primary-color transition border-b-2 border-transparent hover:border-primary-color py-1 text-sm xl:text-base">À Propos</a>
+                <a href="#contact" class="font-semibold secondary-color hover:primary-color transition border-b-2 border-transparent hover:border-primary-color py-1 text-sm xl:text-base">Contact</a>
+            </nav>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-2">
+            <div class="flex flex-col space-y-3">
+                <a href="#accueil" class="font-semibold primary-color hover:text-orange-600 transition py-2 border-l-4 border-primary-color pl-4">Accueil</a>
+                <a href="#services" class="font-semibold secondary-color hover:primary-color transition py-2 border-l-4 border-transparent hover:border-primary-color hover:pl-4">Services</a>
+                <a href="#apropos" class="font-semibold secondary-color hover:primary-color transition py-2 border-l-4 border-transparent hover:border-primary-color hover:pl-4">À Propos</a>
+                <a href="#contact" class="font-semibold secondary-color hover:primary-color transition py-2 border-l-4 border-transparent hover:border-primary-color hover:pl-4">Contact</a>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- Hero Section avec Carrousel Dynamique -->
-    <section id="accueil" class="relative overflow-hidden carousel-container">
-        <!-- Slide 1 - Contrôle Technique -->
-        <div class="hero-slide active hero-gradient" style="background-image: url('https://copilot.microsoft.com/th/id/BCO.008aa509-4ff9-44e1-93ea-86fcef341eef.png'); background-size: cover; background-position: center;">
-            <div class="slide-overlay">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-900/70"></div>
-            </div>
-            <div class="slide-content">
-                <div class="container mx-auto px-4 slide-foreground">
-                    <div class="flex flex-col lg:flex-row items-center">
-                        <!-- Texte -->
-                        <div class="lg:w-1/2 mb-8 lg:mb-0 slide-text">
-                            <div class="mb-6 md:mb-10">
-                                <div class="highlight-badge rounded-full p-1 inline-block">
-                                    <div class="bg-white/95 backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3">
-                                        <div class="flex items-center">
-                                            <i class="fas fa-clock primary-color text-lg md:text-xl mr-2 md:mr-3"></i>
-                                            <span class="text-base md:text-lg font-bold primary-color">Visite technique en 25 minutes</span>
-                                            <i class="fas fa-bolt accent-color text-lg md:text-xl ml-2 md:ml-3"></i>
-                                        </div>
-                                    </div>
-                                </div>
+    <!-- Carrousel optimisé pour mobile -->
+    <section id="accueil" class="relative carousel-container">
+        <!-- Slide 1 -->
+        <div class="hero-slide active hero-gradient mobile-full-slide">
+            <div class="absolute inset-0 bg-blue-900/80"></div>
+            <div class="relative">
+                <div class="container mx-auto px-4">
+                    <div class="flex flex-col lg:flex-row items-center py-10 lg:py-0">
+                        <div class="lg:w-1/2 mb-10 lg:mb-0">
+                            <div class="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 inline-block mb-6">
+                                <span class="text-white font-semibold text-sm">Visite technique en 25 minutes</span>
                             </div>
-                            <h1 class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6 leading-tight text-white">
-                                Contrôle Technique <span class="accent-color">Fiable & Rapide</span> pour vos véhicules
+                            <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                                Contrôle Technique <span class="accent-color">Fiable & Rapide</span>
                             </h1>
-                            <p class="text-lg md:text-xl mb-6 md:mb-10 text-blue-100 max-w-2xl">
-                                RECTA-CI est votre partenaire de confiance pour le contrôle technique des véhicules légers et poids lourds en Côte d'Ivoire.
+                            <p class="text-white/90 mb-6 text-lg">
+                                RECTA-CI est votre partenaire de confiance pour le contrôle technique en Côte d'Ivoire.
                             </p>
-                            <div class="flex flex-col sm:flex-row gap-4 md:gap-6">
-                                <a href="#contact" class="btn-primary contact-btn text-white font-bold shadow-xl">
-                                    <i class="fas fa-calendar-check mr-2 md:mr-3"></i> Prendre rendez-vous
-                                </a>
-                                <a href="#services" class="btn-primary bg-white primary-color font-bold shadow-xl hover:bg-gray-50 mt-2 sm:mt-0">
-                                    <i class="fas fa-list-alt mr-2 md:mr-3"></i> Nos services
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <a href="#contact" class="contact-btn text-white font-semibold py-3 px-6 rounded-lg inline-flex items-center justify-center">
+                                    <i class="fas fa-calendar-check mr-2"></i> Prendre rendez-vous
                                 </a>
                             </div>
                         </div>
-                        <!-- Carte -->
-                        <div class="lg:w-1/2 flex justify-center mt-8 lg:mt-0">
-                            <div class="relative w-full max-w-lg">
-                                <div class="feature-card p-6 md:p-8">
-                                    <div class="text-center mb-6 md:mb-8">
-                                        <div class="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 primary-bg text-white rounded-full mb-4 shadow-xl">
-                                            <i class="fas fa-clock text-xl md:text-2xl"></i>
-                                        </div>
-                                        <h3 class="text-xl md:text-2xl font-bold secondary-color mb-2">Rapidité d'exécution</h3>
-                                        <p class="text-gray-600 text-sm md:text-base">Notre engagement : efficacité sans compromis sur la qualité</p>
+                        <div class="lg:w-1/2 mt-10 lg:mt-0">
+                            <div class="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-lg">
+                                <div class="text-center mb-5">
+                                    <div class="inline-flex items-center justify-center w-14 h-14 primary-bg text-white rounded-full mb-3">
+                                        <i class="fas fa-clock text-xl"></i>
                                     </div>
-                                    <div class="space-y-4 md:space-y-6">
-                                        <div class="flex items-center p-3 md:p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors">
-                                            <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 success-bg rounded-full flex items-center justify-center mr-3 md:mr-4 shadow-md">
-                                                <i class="fas fa-check text-white text-sm md:text-base"></i>
-                                            </div>
-                                            <div>
-                                                <p class="text-gray-800 font-semibold text-sm md:text-base">Contrôle technique en <span class="text-primary-color font-bold">25 minutes</span></p>
-                                                <p class="text-gray-600 text-xs md:text-sm">Temps d'attente réduit au minimum</p>
-                                            </div>
+                                    <h3 class="text-lg font-bold secondary-color mb-2">Rapidité d'exécution</h3>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-center p-3 bg-blue-50 rounded-lg">
+                                        <div class="flex-shrink-0 w-10 h-10 success-bg rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-check text-white"></i>
                                         </div>
-                                        <div class="flex items-center p-3 md:p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors">
-                                            <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 success-bg rounded-full flex items-center justify-center mr-3 md:mr-4 shadow-md">
-                                                <i class="fas fa-user-tie text-white text-sm md:text-base"></i>
-                                            </div>
-                                            <div>
-                                                <p class="text-gray-800 font-semibold text-sm md:text-base">Équipe de techniciens qualifiés</p>
-                                                <p class="text-gray-600 text-xs md:text-sm">Certifiés et expérimentés</p>
-                                            </div>
+                                        <div>
+                                            <p class="font-semibold">Contrôle en 25 minutes</p>
                                         </div>
-                                        <div class="flex items-center p-3 md:p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors">
-                                            <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 success-bg rounded-full flex items-center justify-center mr-3 md:mr-4 shadow-md">
-                                                <i class="fas fa-tools text-white text-sm md:text-base"></i>
-                                            </div>
-                                            <div>
-                                                <p class="text-gray-800 font-semibold text-sm md:text-base">Matériel de pointe et certifié</p>
-                                                <p class="text-gray-600 text-xs md:text-sm">Technologie dernière génération</p>
-                                            </div>
+                                    </div>
+                                    <div class="flex items-center p-3 bg-blue-50 rounded-lg">
+                                        <div class="flex-shrink-0 w-10 h-10 success-bg rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-user-tie text-white"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold">Techniciens qualifiés</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center p-3 bg-blue-50 rounded-lg">
+                                        <div class="flex-shrink-0 w-10 h-10 success-bg rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-tools text-white"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold">Matériel de pointe</p>
                                         </div>
                                     </div>
                                 </div>
@@ -541,98 +298,81 @@
             </div>
         </div>
         
-         <!-- Slide 2 - Certification SIMPLIFIÉE -->
-         <div class="hero-slide hero-gradient-2" style="background-image: url('https://copilot.microsoft.com/th/id/BCO.530b9a81-4be3-4f50-90d7-4809bc9cb92d.png'); background-size: cover; background-position: center;">
-            <div class="slide-overlay">
-                <div class="absolute inset-0 bg-gradient-to-r from-orange-600/90 to-amber-600/80"></div>
-            </div>
-            <div class="slide-content">
-                <div class="container mx-auto px-4 slide-foreground">
-                    <div class="flex flex-col lg:flex-row items-center">
-                        <div class="lg:w-1/2 mb-8 lg:mb-0 slide-text">
-                            <div class="mb-6">
-                                <div class="bg-white/30 backdrop-blur-sm rounded-full px-4 py-2 inline-flex items-center border border-white/40">
-                                    <i class="fas fa-certificate text-white mr-2"></i>
-                                    <span class="text-sm font-semibold text-white">Certification Automobile</span>
-                                </div>
+        <!-- Slide 2 -->
+        <div class="hero-slide hero-gradient-2 mobile-full-slide">
+            <div class="absolute inset-0 bg-orange-600/80"></div>
+            <div class="relative">
+                <div class="container mx-auto px-4">
+                    <div class="flex flex-col lg:flex-row items-center py-10 lg:py-0">
+                        <div class="lg:w-1/2 mb-10 lg:mb-0">
+                            <div class="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 inline-block mb-6">
+                                <span class="text-white font-semibold text-sm">Certification Automobile</span>
                             </div>
-                            
-                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-white">
-                                Certification <span class="text-white font-extrabold">Professionnelle</span>
+                            <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                                Certification <span class="text-white">Professionnelle</span>
                             </h1>
-                            <p class="text-lg md:text-xl mb-6 text-white max-w-xl">
+                            <p class="text-white/90 mb-6 text-lg">
                                 Régularisation complète des véhicules importés.
                             </p>
-                            
                             <div class="mb-6">
                                 <div class="space-y-3">
-                                    <div class="flex items-center p-3 bg-white/10 rounded-xl">
+                                    <div class="flex items-center p-3 bg-white/10 rounded-lg">
                                         <div class="flex-shrink-0 w-8 h-8 bg-white/25 rounded-full flex items-center justify-center mr-3">
                                             <i class="fas fa-check text-white text-sm"></i>
                                         </div>
-                                        <p class="text-sm text-white font-medium">Identification véhicules</p>
+                                        <p class="text-white font-medium">Identification véhicules</p>
                                     </div>
-                                    <div class="flex items-center p-3 bg-white/10 rounded-xl">
+                                    <div class="flex items-center p-3 bg-white/10 rounded-lg">
                                         <div class="flex-shrink-0 w-8 h-8 bg-white/25 rounded-full flex items-center justify-center mr-3">
                                             <i class="fas fa-check text-white text-sm"></i>
                                         </div>
-                                        <p class="text-sm text-white font-medium">Conforme aux normes</p>
+                                        <p class="text-white font-medium">Conforme aux normes</p>
                                     </div>
-                                    <div class="flex items-center p-3 bg-white/10 rounded-xl">
+                                    <div class="flex items-center p-3 bg-white/10 rounded-lg">
                                         <div class="flex-shrink-0 w-8 h-8 bg-white/25 rounded-full flex items-center justify-center mr-3">
                                             <i class="fas fa-check text-white text-sm"></i>
                                         </div>
-                                        <p class="text-sm text-white font-medium">Documents rapides</p>
+                                        <p class="text-white font-medium">Documents rapides</p>
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="flex flex-col sm:flex-row gap-3">
-                                <a href="#contact" class="btn-primary bg-white text-orange-600 hover:bg-gray-100 font-bold">
+                                <a href="#contact" class="bg-white text-orange-600 font-semibold py-3 px-6 rounded-lg inline-flex items-center justify-center">
                                     <i class="fas fa-file-alt mr-2"></i> Demander un devis
                                 </a>
-                                <a href="#services" class="btn-primary bg-white/20 text-white hover:bg-white/30 font-bold border border-white/40 mt-2 sm:mt-0">
-                                    <i class="fas fa-certificate mr-2"></i> Nos services
-                                </a>
                             </div>
                         </div>
-                        <div class="lg:w-1/2 flex justify-center mt-8 lg:mt-0">
-                            <div class="relative w-full max-w-md">
-                                <div class="bg-white rounded-xl p-5 shadow-lg border-2 border-orange-400">
-                                    <div class="text-center mb-4">
-                                        <div class="inline-flex items-center justify-center w-14 h-14 orange-gradient text-white rounded-full mb-3">
-                                            <i class="fas fa-passport text-xl"></i>
-                                        </div>
-                                        <h3 class="text-lg font-bold text-orange-600 mb-2">Services d'identification</h3>
-                                        <p class="text-gray-600 text-sm">Régularisation de vos véhicules</p>
+                        <div class="lg:w-1/2 mt-10 lg:mt-0">
+                            <div class="bg-white rounded-xl p-6 shadow-lg">
+                                <div class="text-center mb-5">
+                                    <div class="inline-flex items-center justify-center w-14 h-14 orange-gradient text-white rounded-full mb-3">
+                                        <i class="fas fa-passport text-xl"></i>
                                     </div>
-                                    <div class="space-y-3">
-                                        <div class="flex items-center bg-orange-50 rounded-lg p-3">
-                                            <div class="flex-shrink-0 w-10 h-10 orange-gradient rounded-full flex items-center justify-center mr-3">
-                                                <i class="fas fa-car text-white text-sm"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold text-sm text-orange-600">Véhicules neufs</p>
-                                                <p class="text-gray-600 text-xs">Certification complète</p>
-                                            </div>
+                                    <h3 class="text-lg font-bold text-orange-600 mb-2">Services d'identification</h3>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-center bg-orange-50 rounded-lg p-3">
+                                        <div class="flex-shrink-0 w-10 h-10 orange-gradient rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-car text-white text-sm"></i>
                                         </div>
-                                        <div class="flex items-center bg-orange-50 rounded-lg p-3">
-                                            <div class="flex-shrink-0 w-10 h-10 orange-gradient rounded-full flex items-center justify-center mr-3">
-                                                <i class="fas fa-car text-white text-sm"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold text-sm text-orange-600">Véhicules d'occasion</p>
-                                                <p class="text-gray-600 text-xs">Identification complète</p>
-                                            </div>
+                                        <div>
+                                            <p class="font-bold text-orange-600">Véhicules neufs</p>
                                         </div>
-                                        <div class="flex items-center bg-orange-50 rounded-lg p-3">
-                                            <div class="flex-shrink-0 w-10 h-10 orange-gradient rounded-full flex items-center justify-center mr-3">
-                                                <i class="fas fa-file-certificate text-white text-sm"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold text-sm text-orange-600">Certification</p>
-                                                <p class="text-gray-600 text-xs">Documents sur place</p>
-                                            </div>
+                                    </div>
+                                    <div class="flex items-center bg-orange-50 rounded-lg p-3">
+                                        <div class="flex-shrink-0 w-10 h-10 orange-gradient rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-car text-white text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-orange-600">Véhicules d'occasion</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center bg-orange-50 rounded-lg p-3">
+                                        <div class="flex-shrink-0 w-10 h-10 orange-gradient rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-file-certificate text-white text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-orange-600">Certification complète</p>
                                         </div>
                                     </div>
                                 </div>
@@ -643,102 +383,81 @@
             </div>
         </div>
         
-        <!-- Slide 3 - Vignettes -->
-        <div class="hero-slide hero-gradient-3" style="background-image: url('https://copilot.microsoft.com/th/id/BCO.03ea7150-4448-4a1e-8f4d-90e43a58fd75.png'); background-size: cover; background-position: center;">
-            <div class="slide-overlay">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-800/90 to-blue-900/80"></div>
-            </div>
-            <div class="slide-content">
-                <div class="container mx-auto px-4 slide-foreground">
-                    <div class="flex flex-col lg:flex-row items-center">
-                        <div class="lg:w-1/2 mb-8 lg:mb-0 slide-text">
-                            <div class="mb-6 md:mb-10">
-                                <div class="bg-white/25 backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3 inline-flex items-center border border-white/30">
-                                    <i class="fas fa-award text-white mr-2 md:mr-3"></i>
-                                    <span class="text-base md:text-lg font-semibold text-white">Centre Agréé par l'État</span>
-                                </div>
+        <!-- Slide 3 -->
+        <div class="hero-slide hero-gradient-3 mobile-full-slide">
+            <div class="absolute inset-0 bg-blue-800/80"></div>
+            <div class="relative">
+                <div class="container mx-auto px-4">
+                    <div class="flex flex-col lg:flex-row items-center py-10 lg:py-0">
+                        <div class="lg:w-1/2 mb-10 lg:mb-0">
+                            <div class="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 inline-block mb-6">
+                                <span class="text-white font-semibold text-sm">Centre Agréé</span>
                             </div>
-                            
-                            <h1 class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6 leading-tight text-white">
-                                Vignettes Autos, Motos & <span class="accent-color font-extrabold">Moto-tricycles</span>
+                            <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                                Vignettes Autos, Motos & Tricycles
                             </h1>
-                            <p class="text-lg md:text-xl mb-6 md:mb-10 text-blue-100 max-w-2xl opacity-95">
-                                Obtenez vos vignettes officielles rapidement et en toute simplicité dans notre centre agréé.
+                            <p class="text-white/90 mb-6 text-lg">
+                                Obtenez vos vignettes officielles rapidement.
                             </p>
-                            
-                            <div class="mb-6 md:mb-10 p-6 md:p-8 bg-white/15 rounded-2xl backdrop-blur-sm border border-white/20 shadow-xl">
-                                <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-white">Types de vignettes disponibles</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                                    <div class="text-center p-4 md:p-6 bg-white/10 rounded-2xl hover:bg-white/20 transition-colors border border-white/10">
-                                        <div class="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-full mb-4">
-                                            <i class="fas fa-car text-xl md:text-3xl text-white"></i>
+                            <div class="mb-6">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <div class="text-center p-3 bg-white/10 rounded-xl">
+                                        <div class="inline-flex items-center justify-center w-10 h-10 bg-white/20 rounded-full mb-2 mx-auto">
+                                            <i class="fas fa-car text-white"></i>
                                         </div>
-                                        <h4 class="font-bold text-white text-base md:text-lg">Véhicules légers</h4>
-                                        <p class="text-blue-200 text-xs md:text-sm mt-2">Voitures, 4x4, SUV</p>
+                                        <h4 class="font-bold text-white">Véhicules</h4>
                                     </div>
-                                    <div class="text-center p-4 md:p-6 bg-white/10 rounded-2xl hover:bg-white/20 transition-colors border border-white/10">
-                                        <div class="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-full mb-4">
-                                            <i class="fas fa-motorcycle text-xl md:text-3xl text-white"></i>
+                                    <div class="text-center p-3 bg-white/10 rounded-xl">
+                                        <div class="inline-flex items-center justify-center w-10 h-10 bg-white/20 rounded-full mb-2 mx-auto">
+                                            <i class="fas fa-motorcycle text-white"></i>
                                         </div>
-                                        <h4 class="font-bold text-white text-base md:text-lg">Motos</h4>
-                                        <p class="text-blue-200 text-xs md:text-sm mt-2">Tous types de motocyclettes</p>
+                                        <h4 class="font-bold text-white">Motos</h4>
                                     </div>
-                                    <div class="text-center p-4 md:p-6 bg-white/10 rounded-2xl hover:bg-white/20 transition-colors border border-white/10">
-                                        <div class="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-full mb-4">
-                                            <i class="fas fa-truck-pickup text-xl md:text-3xl text-white"></i>
+                                    <div class="text-center p-3 bg-white/10 rounded-xl">
+                                        <div class="inline-flex items-center justify-center w-10 h-10 bg-white/20 rounded-full mb-2 mx-auto">
+                                            <i class="fas fa-truck-pickup text-white"></i>
                                         </div>
-                                        <h4 class="font-bold text-white text-base md:text-lg">Moto-tricycles</h4>
-                                        <p class="text-blue-200 text-xs md:text-sm mt-2">Tricycles à moteur</p>
+                                        <h4 class="font-bold text-white">Tricycles</h4>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="flex flex-col sm:flex-row gap-4 md:gap-6">
-                                <a href="#contact" class="btn-primary contact-btn text-white font-bold shadow-xl">
-                                    <i class="fas fa-sticky-note mr-2 md:mr-3"></i> Acheter une vignette
-                                </a>
-                                <a href="#apropos" class="btn-primary bg-white primary-color font-bold shadow-xl hover:bg-gray-50 mt-2 sm:mt-0">
-                                    <i class="fas fa-map-marker-alt mr-2 md:mr-3"></i> Visiter notre centre
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <a href="#contact" class="contact-btn text-white font-semibold py-3 px-6 rounded-lg inline-flex items-center justify-center">
+                                    <i class="fas fa-sticky-note mr-2"></i> Acheter vignette
                                 </a>
                             </div>
                         </div>
-                        <div class="lg:w-1/2 flex justify-center mt-8 lg:mt-0">
-                            <div class="relative w-full max-w-lg">
-                                <div class="feature-card p-6 md:p-8 lg:p-10">
-                                    <div class="text-center mb-6 md:mb-8">
-                                        <div class="inline-flex items-center justify-center w-16 h-16 md:w-24 md:h-24 accent-bg text-white rounded-full mb-4 shadow-2xl">
-                                            <i class="fas fa-sticky-note text-xl md:text-2xl"></i>
-                                        </div>
-                                        <h3 class="text-xl md:text-2xl font-bold secondary-color mb-2">Documents officiels</h3>
-                                        <p class="text-gray-600 text-sm md:text-base">Délivrance immédiate et conforme</p>
+                        <div class="lg:w-1/2 mt-10 lg:mt-0">
+                            <div class="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-lg">
+                                <div class="text-center mb-5">
+                                    <div class="inline-flex items-center justify-center w-14 h-14 accent-bg text-white rounded-full mb-3">
+                                        <i class="fas fa-sticky-note text-xl"></i>
                                     </div>
-                                    <div class="space-y-4 md:space-y-6">
-                                        <div class="flex items-center bg-gradient-to-r from-blue-50 to-white rounded-2xl p-4 md:p-6 hover:from-blue-100 transition-all shadow-sm hover:shadow-md">
-                                            <div class="flex-shrink-0 w-10 h-10 md:w-14 md:h-14 secondary-bg rounded-full flex items-center justify-center mr-3 md:mr-5">
-                                                <i class="fas fa-file-invoice text-white text-base md:text-xl"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold text-base md:text-lg text-secondary-color">Vignettes officielles</p>
-                                                <p class="text-gray-600 text-xs md:text-sm">Délivrées immédiatement sur place</p>
-                                            </div>
+                                    <h3 class="text-lg font-bold secondary-color mb-2">Documents officiels</h3>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-center bg-blue-50 rounded-lg p-3">
+                                        <div class="flex-shrink-0 w-10 h-10 secondary-bg rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-file-invoice text-white"></i>
                                         </div>
-                                        <div class="flex items-center bg-gradient-to-r from-blue-50 to-white rounded-2xl p-4 md:p-6 hover:from-blue-100 transition-all shadow-sm hover:shadow-md">
-                                            <div class="flex-shrink-0 w-10 h-10 md:w-14 md:h-14 secondary-bg rounded-full flex items-center justify-center mr-3 md:mr-5">
-                                                <i class="fas fa-check-circle text-white text-base md:text-xl"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold text-base md:text-lg text-secondary-color">Conformité garantie</p>
-                                                <p class="text-gray-600 text-xs md:text-sm">Respect strict des normes en vigueur</p>
-                                            </div>
+                                        <div>
+                                            <p class="font-bold text-secondary-color">Vignettes officielles</p>
                                         </div>
-                                        <div class="flex items-center bg-gradient-to-r from-blue-50 to-white rounded-2xl p-4 md:p-6 hover:from-blue-100 transition-all shadow-sm hover:shadow-md">
-                                            <div class="flex-shrink-0 w-10 h-10 md:w-14 md:h-14 secondary-bg rounded-full flex items-center justify-center mr-3 md:mr-5">
-                                                <i class="fas fa-award text-white text-base md:text-xl"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold text-base md:text-lg text-secondary-color">Centre agréé</p>
-                                                <p class="text-gray-600 text-xs md:text-sm">Reconnu par les autorités compétentes</p>
-                                            </div>
+                                    </div>
+                                    <div class="flex items-center bg-blue-50 rounded-lg p-3">
+                                        <div class="flex-shrink-0 w-10 h-10 secondary-bg rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-check-circle text-white"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-secondary-color">Conformité garantie</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center bg-blue-50 rounded-lg p-3">
+                                        <div class="flex-shrink-0 w-10 h-10 secondary-bg rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-award text-white"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-secondary-color">Centre agréé</p>
                                         </div>
                                     </div>
                                 </div>
@@ -749,15 +468,7 @@
             </div>
         </div>
         
-        <!-- Navigation du carrousel -->
-        <button class="carousel-nav prev">
-            <i class="fas fa-chevron-left text-xl md:text-2xl"></i>
-        </button>
-        <button class="carousel-nav next">
-            <i class="fas fa-chevron-right text-xl md:text-2xl"></i>
-        </button>
-        
-        <!-- Indicateurs de slide -->
+        <!-- Dots de navigation -->
         <div class="carousel-dots">
             <div class="carousel-dot active" data-slide="0"></div>
             <div class="carousel-dot" data-slide="1"></div>
@@ -765,166 +476,102 @@
         </div>
     </section>
 
-    <!-- Services Section - RESPONSIVE -->
-    <section id="services" class="py-12 md:py-16 lg:py-20 bg-gray-50">
+    <!-- Services -->
+    <section id="services" class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-10 md:mb-16">
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold secondary-color mb-4 md:mb-6">Nos Services</h2>
-                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">RECTA-CI vous propose une gamme complète de services pour vos véhicules avec une expertise reconnue et un souci du détail.</p>
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold secondary-color mb-4">Nos Services</h2>
+                <p class="text-gray-600 max-w-xl mx-auto">Services complets pour vos véhicules</p>
             </div>
             
-            <div class="services-grid">
-                <!-- Service 1 -->
-                <div class="service-card bg-white rounded-2xl shadow-xl p-6 md:p-8 border-t-4 primary-bg hover:shadow-2xl">
-                    <div class="primary-color mb-4 md:mb-6">
-                        <i class="fas fa-truck text-4xl md:text-5xl"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl shadow p-5 text-center">
+                    <div class="primary-color mb-4">
+                        <i class="fas fa-truck text-3xl"></i>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold secondary-color mb-3 md:mb-4">Contrôle Technique Véhicules Légers et Poids Lourds</h3>
-                    <p class="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">Contrôle technique complet conforme aux normes en vigueur pour tous types de véhicules.</p>
-                    <div class="primary-color font-semibold flex items-center text-base md:text-lg">
-                        <span>En savoir plus</span>
-                        <i class="fas fa-arrow-right ml-2 md:ml-3 transition-transform group-hover:translate-x-2"></i>
-                    </div>
+                    <h3 class="font-bold secondary-color mb-3">Contrôle Technique</h3>
+                    <p class="text-gray-600 text-sm">Véhicules légers et poids lourds</p>
                 </div>
                 
-                <!-- Service 2 -->
-                <div class="service-card bg-white rounded-2xl shadow-xl p-6 md:p-8 border-t-4 success-bg hover:shadow-2xl">
-                    <div class="success-color mb-4 md:mb-6">
-                        <i class="fas fa-passport text-4xl md:text-5xl"></i>
+                <div class="bg-white rounded-xl shadow p-5 text-center">
+                    <div class="success-color mb-4">
+                        <i class="fas fa-passport text-3xl"></i>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold secondary-color mb-3 md:mb-4">Civio-contrôle identification</h3>
-                    <p class="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">Identification des véhicules importés neufs et d'occasion pour une régularisation en règle.</p>
-                    <div class="success-color font-semibold flex items-center text-base md:text-lg">
-                        <span>En savoir plus</span>
-                        <i class="fas fa-arrow-right ml-2 md:ml-3 transition-transform group-hover:translate-x-2"></i>
-                    </div>
+                    <h3 class="font-bold secondary-color mb-3">Civio-contrôle</h3>
+                    <p class="text-gray-600 text-sm">Identification véhicules</p>
                 </div>
                 
-                <!-- Service 3 -->
-                <div class="service-card bg-white rounded-2xl shadow-xl p-6 md:p-8 border-t-4 accent-bg hover:shadow-2xl">
-                    <div class="accent-color mb-4 md:mb-6">
-                        <i class="fas fa-car text-4xl md:text-5xl"></i>
+                <div class="bg-white rounded-xl shadow p-5 text-center">
+                    <div class="accent-color mb-4">
+                        <i class="fas fa-car text-3xl"></i>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold secondary-color mb-3 md:mb-4">Identification de Véhicules Neufs</h3>
-                    <p class="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">Service d'identification spécialisé pour les véhicules neufs avec délivrance des documents requis.</p>
-                    <div class="accent-color font-semibold flex items-center text-base md:text-lg">
-                        <span>En savoir plus</span>
-                        <i class="fas fa-arrow-right ml-2 md:ml-3 transition-transform group-hover:translate-x-2"></i>
-                    </div>
+                    <h3 class="font-bold secondary-color mb-3">Véhicules Neufs</h3>
+                    <p class="text-gray-600 text-sm">Identification spécialisée</p>
                 </div>
                 
-                <!-- Service 4 -->
-                <div class="service-card bg-white rounded-2xl shadow-xl p-6 md:p-8 border-t-4 secondary-bg hover:shadow-2xl">
-                    <div class="secondary-color mb-4 md:mb-6">
-                        <i class="fas fa-sticky-note text-4xl md:text-5xl"></i>
+                <div class="bg-white rounded-xl shadow p-5 text-center">
+                    <div class="secondary-color mb-4">
+                        <i class="fas fa-sticky-note text-3xl"></i>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold secondary-color mb-3 md:mb-4">Vente de Vignettes</h3>
-                    <p class="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">Vente de vignettes pour autos, motos et moto-tricycles avec formalités simplifiées.</p>
-                    <div class="secondary-color font-semibold flex items-center text-base md:text-lg">
-                        <span>En savoir plus</span>
-                        <i class="fas fa-arrow-right ml-2 md:ml-3 transition-transform group-hover:translate-x-2"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-12 md:mt-20 bg-gradient-to-r from-blue-50 to-white rounded-3xl p-6 md:p-8 lg:p-12 text-center shadow-xl border border-blue-100">
-                <h3 class="text-2xl md:text-3xl font-bold secondary-color mb-4 md:mb-6">Pourquoi choisir RECTA-CI ?</h3>
-                <p class="text-lg md:text-xl text-gray-700 mb-8 md:mb-12 max-w-2xl mx-auto">Notre engagement envers l'excellence et la satisfaction client</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 mt-4 md:mt-6">
-                    <div class="flex flex-col items-center p-4 md:p-6">
-                        <div class="w-16 h-16 md:w-20 md:h-20 primary-bg text-white rounded-full flex items-center justify-center mb-4 md:mb-6 shadow-2xl">
-                            <i class="fas fa-bolt text-2xl md:text-3xl"></i>
-                        </div>
-                        <h4 class="font-bold text-xl md:text-2xl mb-3 md:mb-4 secondary-color">Rapide</h4>
-                        <p class="text-gray-700 text-base md:text-lg">Contrôle technique effectué en seulement 25 minutes</p>
-                    </div>
-                    <div class="flex flex-col items-center p-4 md:p-6">
-                        <div class="w-16 h-16 md:w-20 md:h-20 success-bg text-white rounded-full flex items-center justify-center mb-4 md:mb-6 shadow-2xl">
-                            <i class="fas fa-shield-alt text-2xl md:text-3xl"></i>
-                        </div>
-                        <h4 class="font-bold text-xl md:text-2xl mb-3 md:mb-4 secondary-color">Fiable</h4>
-                        <p class="text-gray-700 text-base md:text-lg">Des résultats précis et conformes aux normes officielles</p>
-                    </div>
-                    <div class="flex flex-col items-center p-4 md:p-6">
-                        <div class="w-16 h-16 md:w-20 md:h-20 accent-bg text-white rounded-full flex items-center justify-center mb-4 md:mb-6 shadow-2xl">
-                            <i class="fas fa-users text-2xl md:text-3xl"></i>
-                        </div>
-                        <h4 class="font-bold text-xl md:text-2xl mb-3 md:mb-4 secondary-color">Professionnel</h4>
-                        <p class="text-gray-700 text-base md:text-lg">Une équipe expérimentée et certifiée à votre service</p>
-                    </div>
+                    <h3 class="font-bold secondary-color mb-3">Vignettes</h3>
+                    <p class="text-gray-600 text-sm">Autos, motos, tricycles</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section - RESPONSIVE -->
-    <section id="apropos" class="py-12 md:py-16 lg:py-20 bg-white">
+    <!-- À propos -->
+    <section id="apropos" class="py-12 bg-white">
         <div class="container mx-auto px-4">
             <div class="flex flex-col lg:flex-row items-center">
-                <div class="lg:w-1/2 mb-10 md:mb-12 lg:mb-0 lg:pr-8 xl:pr-16">
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold secondary-color mb-6 md:mb-8">À propos de RECTA-CI</h2>
-                    <p class="text-lg md:text-xl text-gray-700 mb-6 md:mb-8 leading-relaxed">
-                        RECTA-CI est un centre de contrôle technique agréé, situé à Anyama, offrant des services professionnels 
-                        pour tous types de véhicules en Côte d'Ivoire.
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
+                    <h2 class="text-3xl font-bold secondary-color mb-6">À propos de RECTA-CI</h2>
+                    <p class="text-gray-700 mb-4">
+                        Centre de contrôle technique agréé à Anyama, offrant des services professionnels.
                     </p>
-                    <p class="text-gray-700 mb-8 md:mb-10 text-base md:text-lg leading-relaxed">
-                        Notre mission est de garantir la sécurité routière en assurant que tous les véhicules circulant sur les routes 
-                        ivoiriennes soient en parfait état de fonctionnement. Grâce à notre équipe de techniciens qualifiés et à notre 
-                        équipement de pointe, nous effectuons des contrôles techniques rigoureux et fiables.
+                    <p class="text-gray-700 mb-8">
+                        Notre mission est de garantir la sécurité routière avec des contrôles rigoureux.
                     </p>
-                    <div class="flex flex-col sm:flex-row items-center justify-center sm:justify-start mt-8 md:mt-12 bg-gradient-to-r from-blue-50 to-white rounded-2xl p-6 md:p-8 shadow-lg">
-                        <div class="text-center mb-6 sm:mb-0 sm:mr-8 md:mr-10">
-                            <div class="stat-number primary-color">25</div>
-                            <div class="text-gray-700 font-semibold text-sm md:text-base">Minutes</div>
-                            <p class="text-gray-600 text-xs md:text-sm mt-2">Contrôle technique</p>
+                    <div class="flex items-center bg-gray-50 rounded-xl p-6">
+                        <div class="text-center mr-6">
+                            <div class="text-3xl font-bold primary-color">25</div>
+                            <div class="text-gray-700 font-semibold text-sm">Minutes</div>
                         </div>
-                        <div class="h-px w-16 sm:w-px sm:h-16 bg-gray-300 my-4 sm:my-0"></div>
-                        <div class="text-center mt-6 sm:mt-0 sm:ml-8 md:ml-10">
-                            <div class="stat-number success-color">100%</div>
-                            <div class="text-gray-700 font-semibold text-sm md:text-base">Satisfaction</div>
-                            <p class="text-gray-600 text-xs md:text-sm mt-2">Clients satisfaits</p>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold success-color">100%</div>
+                            <div class="text-gray-700 font-semibold text-sm">Satisfaction</div>
                         </div>
                     </div>
                 </div>
                 <div class="lg:w-1/2">
-                    <div class="rounded-3xl p-6 md:p-8 lg:p-10 shadow-2xl bg-gradient-to-br from-blue-50 to-white border border-blue-100">
-                        <h3 class="text-2xl md:text-3xl font-bold secondary-color mb-6 md:mb-8">Notre centre</h3>
-                        <div class="space-y-6 md:space-y-8">
-                            <div class="flex flex-col sm:flex-row items-start bg-white p-5 md:p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-                                <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 primary-bg rounded-xl flex items-center justify-center mb-4 sm:mb-0 sm:mr-4 md:mr-6 shadow-md">
-                                    <i class="fas fa-map-marker-alt text-xl md:text-2xl text-white"></i>
+                    <div class="bg-gray-50 rounded-xl p-6">
+                        <h3 class="text-xl font-bold secondary-color mb-6">Notre centre</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 w-12 h-12 primary-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-white"></i>
                                 </div>
-                                <div class="sm:flex-1">
-                                    <h4 class="font-bold text-lg md:text-xl secondary-color mb-2">Adresse</h4>
-                                    <p class="text-gray-700 text-base md:text-lg">Anyama Boulevard Principal UNICAFE</p>
-                                    <p class="text-primary-color font-medium mt-2 flex items-center text-sm md:text-base">
-                                        <i class="fas fa-directions mr-2"></i> Facilement accessible
-                                    </p>
+                                <div>
+                                    <h4 class="font-bold secondary-color">Adresse</h4>
+                                    <p class="text-gray-700 text-sm">Anyama Boulevard Principal UNICAFE</p>
                                 </div>
                             </div>
-                            <div class="flex flex-col sm:flex-row items-start bg-white p-5 md:p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-                                <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 success-bg rounded-xl flex items-center justify-center mb-4 sm:mb-0 sm:mr-4 md:mr-6 shadow-md">
-                                    <i class="fas fa-clock text-xl md:text-2xl text-white"></i>
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 w-12 h-12 success-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-clock text-white"></i>
                                 </div>
-                                <div class="sm:flex-1">
-                                    <h4 class="font-bold text-lg md:text-xl secondary-color mb-2">Horaires d'ouverture</h4>
-                                    <p class="text-gray-700 text-base md:text-lg">Lundi - Vendredi: 8h00 - 18h00</p>
-                                    <p class="text-gray-700 text-base md:text-lg">Samedi: 8h00 - 13h00</p>
-                                    <p class="text-success-color font-medium mt-2 flex items-center text-sm md:text-base">
-                                        <i class="fas fa-calendar-check mr-2"></i> Prise de rendez-vous possible
-                                    </p>
+                                <div>
+                                    <h4 class="font-bold secondary-color">Horaires</h4>
+                                    <p class="text-gray-700 text-sm">Lun-Ven: 8h-18h • Sam: 8h-13h</p>
                                 </div>
                             </div>
-                            <div class="flex flex-col sm:flex-row items-start bg-white p-5 md:p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-                                <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 accent-bg rounded-xl flex items-center justify-center mb-4 sm:mb-0 sm:mr-4 md:mr-6 shadow-md">
-                                    <i class="fas fa-car text-xl md:text-2xl text-white"></i>
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 w-12 h-12 accent-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-car text-white"></i>
                                 </div>
-                                <div class="sm:flex-1">
-                                    <h4 class="font-bold text-lg md:text-xl secondary-color mb-2">Services sur place</h4>
-                                    <p class="text-gray-700 text-base md:text-lg">Parking gratuit • Attente confortable • Résultats immédiats</p>
-                                    <p class="text-accent-color font-medium mt-2 flex items-center text-sm md:text-base">
-                                        <i class="fas fa-wifi mr-2"></i> WiFi gratuit pour les clients
-                                    </p>
+                                <div>
+                                    <h4 class="font-bold secondary-color">Services</h4>
+                                    <p class="text-gray-700 text-sm">Parking gratuit • Résultats immédiats</p>
                                 </div>
                             </div>
                         </div>
@@ -934,109 +581,77 @@
         </div>
     </section>
 
-    <!-- Contact Section - RESPONSIVE -->
-    <section id="contact" class="py-12 md:py-16 lg:py-20 bg-gray-50">
+    <!-- Contact -->
+    <section id="contact" class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-10 md:mb-16">
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold secondary-color mb-4 md:mb-6">Contactez-nous</h2>
-                <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">Prenez rendez-vous pour votre contrôle technique ou renseignez-vous sur nos services.</p>
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold secondary-color mb-4">Contactez-nous</h2>
+                <p class="text-gray-600">Prenez rendez-vous pour votre contrôle technique</p>
             </div>
             
-            <div class="flex flex-col lg:flex-row gap-8 md:gap-12">
+            <div class="flex flex-col lg:flex-row gap-8">
                 <div class="lg:w-1/2">
-                    <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10">
-                        <h3 class="text-2xl md:text-3xl font-bold secondary-color mb-6 md:mb-8">Envoyez-nous un message</h3>
-                        <form id="contactForm" class="space-y-6 md:space-y-8">
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <h3 class="text-xl font-bold secondary-color mb-6">Envoyez un message</h3>
+                        <form class="space-y-4">
                             <div>
-                                <label for="name" class="block text-gray-700 font-semibold mb-2 md:mb-3 text-base md:text-lg">Nom complet</label>
-                                <input type="text" id="name" class="w-full px-4 md:px-6 py-3 md:py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-3 focus:ring-orange-500/50 focus:border-orange-500 text-base md:text-lg" required>
+                                <label class="block text-gray-700 font-medium mb-2">Nom complet</label>
+                                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500">
                             </div>
                             <div>
-                                <label for="phone" class="block text-gray-700 font-semibold mb-2 md:mb-3 text-base md:text-lg">Téléphone</label>
-                                <input type="tel" id="phone" class="w-full px-4 md:px-6 py-3 md:py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-3 focus:ring-orange-500/50 focus:border-orange-500 text-base md:text-lg" required>
+                                <label class="block text-gray-700 font-medium mb-2">Téléphone</label>
+                                <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500">
                             </div>
                             <div>
-                                <label for="email" class="block text-gray-700 font-semibold mb-2 md:mb-3 text-base md:text-lg">Email</label>
-                                <input type="email" id="email" class="w-full px-4 md:px-6 py-3 md:py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-3 focus:ring-orange-500/50 focus:border-orange-500 text-base md:text-lg" required>
+                                <label class="block text-gray-700 font-medium mb-2">Email</label>
+                                <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500">
                             </div>
                             <div>
-                                <label for="service" class="block text-gray-700 font-semibold mb-2 md:mb-3 text-base md:text-lg">Service demandé</label>
-                                <select id="service" class="w-full px-4 md:px-6 py-3 md:py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-3 focus:ring-orange-500/50 focus:border-orange-500 text-base md:text-lg">
-                                    <option value="">Sélectionnez un service</option>
-                                    <option value="controle">Contrôle Technique Véhicule Léger</option>
-                                    <option value="poids-lourd">Contrôle Technique Poids Lourd</option>
-                                    <option value="civio">Civio-contrôle identification</option>
-                                    <option value="vignette">Vente de vignette</option>
-                                </select>
+                                <label class="block text-gray-700 font-medium mb-2">Message</label>
+                                <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"></textarea>
                             </div>
-                            <div>
-                                <label for="message" class="block text-gray-700 font-semibold mb-2 md:mb-3 text-base md:text-lg">Message</label>
-                                <textarea id="message" rows="4" class="w-full px-4 md:px-6 py-3 md:py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-3 focus:ring-orange-500/50 focus:border-orange-500 text-base md:text-lg"></textarea>
-                            </div>
-                            <button type="submit" class="contact-btn text-white font-bold py-4 md:py-5 px-6 md:px-10 rounded-xl shadow-xl w-full text-lg md:text-xl transition-all hover:scale-105">
-                                <i class="fas fa-paper-plane mr-2 md:mr-3"></i> Envoyer le message
+                            <button type="submit" class="contact-btn text-white font-semibold py-3 px-6 rounded-lg w-full">
+                                Envoyer le message
                             </button>
                         </form>
                     </div>
                 </div>
                 
-                <div class="lg:w-1/2 mt-8 lg:mt-0">
-                    <div class="secondary-bg text-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10 h-full">
-                        <h3 class="text-2xl md:text-3xl font-bold mb-8 md:mb-10">Coordonnées</h3>
+                <div class="lg:w-1/2">
+                    <div class="secondary-bg text-white rounded-xl shadow p-6">
+                        <h3 class="text-xl font-bold mb-6">Coordonnées</h3>
                         
-                        <div class="space-y-8 md:space-y-10">
-                            <div class="flex flex-col sm:flex-row items-start bg-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm border border-white/20 hover:bg-white/15 transition-colors">
-                                <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 primary-bg rounded-xl flex items-center justify-center mb-4 sm:mb-0 sm:mr-4 md:mr-6 shadow-lg">
-                                    <i class="fas fa-phone-alt text-xl md:text-2xl"></i>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 w-12 h-12 primary-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-phone-alt"></i>
                                 </div>
-                                <div class="sm:flex-1">
-                                    <h4 class="font-bold text-xl md:text-2xl mb-2 md:mb-3">Téléphone</h4>
-                                    <p class="text-blue-100 text-lg md:text-2xl font-semibold">(225) 27 24 58 68 78</p>
-                                    <p class="text-blue-200 mt-2 md:mt-3 text-sm md:text-lg">Appelez-nous pour prendre rendez-vous rapidement</p>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2">Téléphone</h4>
+                                    <p class="text-blue-100">(225) 27 24 58 68 78</p>
+                                    <p class="text-blue-200 text-sm mt-1">Appelez-nous pour prendre rendez-vous</p>
                                 </div>
                             </div>
                             
-                            <div class="flex flex-col sm:flex-row items-start bg-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm border border-white/20 hover:bg-white/15 transition-colors">
-                                <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 success-bg rounded-xl flex items-center justify-center mb-4 sm:mb-0 sm:mr-4 md:mr-6 shadow-lg">
-                                    <i class="fas fa-envelope text-xl md:text-2xl"></i>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 w-12 h-12 success-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope"></i>
                                 </div>
-                                <div class="sm:flex-1">
-                                    <h4 class="font-bold text-xl md:text-2xl mb-2 md:mb-3">Email</h4>
-                                    <p class="text-blue-100 text-lg md:text-2xl font-semibold">info@rectaci.com</p>
-                                    <p class="text-blue-200 mt-2 md:mt-3 text-sm md:text-lg">Réponse garantie sous 24h ouvrées</p>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2">Email</h4>
+                                    <p class="text-blue-100">info@rectaci.com</p>
+                                    <p class="text-blue-200 text-sm mt-1">Réponse sous 24h</p>
                                 </div>
                             </div>
                             
-                            <div class="flex flex-col sm:flex-row items-start bg-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm border border-white/20 hover:bg-white/15 transition-colors">
-                                <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 accent-bg rounded-xl flex items-center justify-center mb-4 sm:mb-0 sm:mr-4 md:mr-6 shadow-lg">
-                                    <i class="fas fa-map-marker-alt text-xl md:text-2xl"></i>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 w-12 h-12 accent-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt"></i>
                                 </div>
-                                <div class="sm:flex-1">
-                                    <h4 class="font-bold text-xl md:text-2xl mb-2 md:mb-3">Adresse</h4>
-                                    <p class="text-blue-100 text-lg md:text-2xl font-semibold">Anyama Boulevard Principal UNICAFE</p>
-                                    <p class="text-blue-200 mt-2 md:mt-3 text-sm md:text-lg">Notre centre est facilement accessible avec parking gratuit et sécurisé</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8 md:mt-12 pt-6 md:pt-10 border-t" style="border-color: rgba(247, 142, 5, 0.3);">
-                            <h4 class="font-bold text-xl md:text-2xl mb-4 md:mb-6">Horaires d'ouverture</h4>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-                                <div class="bg-white/5 rounded-xl p-4 md:p-6">
-                                    <p class="font-semibold text-lg md:text-xl mb-1 md:mb-2">Lundi - Vendredi</p>
-                                    <p class="text-blue-200 text-base md:text-lg">8h00 - 18h00</p>
-                                </div>
-                                <div class="bg-white/5 rounded-xl p-4 md:p-6">
-                                    <p class="font-semibold text-lg md:text-xl mb-1 md:mb-2">Samedi</p>
-                                    <p class="text-blue-200 text-base md:text-lg">8h00 - 13h00</p>
-                                </div>
-                                <div class="bg-white/5 rounded-xl p-4 md:p-6">
-                                    <p class="font-semibold text-lg md:text-xl mb-1 md:mb-2">Dimanche</p>
-                                    <p class="text-blue-200 text-base md:text-lg">Fermé</p>
-                                </div>
-                                <div class="bg-white/5 rounded-xl p-4 md:p-6">
-                                    <p class="font-semibold text-lg md:text-xl mb-1 md:mb-2">Jours fériés</p>
-                                    <p class="text-blue-200 text-base md:text-lg">Sur rendez-vous</p>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2">Adresse</h4>
+                                    <p class="text-blue-100">Anyama Boulevard Principal UNICAFE</p>
+                                    <p class="text-blue-200 text-sm mt-1">Parking gratuit et sécurisé</p>
                                 </div>
                             </div>
                         </div>
@@ -1046,54 +661,50 @@
         </div>
     </section>
 
-    <!-- Footer - RESPONSIVE -->
-    <footer class="secondary-bg text-white py-12 md:py-16">
+    <!-- Footer -->
+    <footer class="secondary-bg text-white py-12">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-8 md:mb-0 text-center md:text-left">
-                    <div class="flex flex-col sm:flex-row items-center mb-6">
-                        <div class="primary-bg text-white p-3 rounded-xl mb-4 sm:mb-0 sm:mr-4 shadow-lg">
-                            <i class="fas fa-car text-2xl md:text-3xl"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-2xl md:text-3xl font-bold">RECTA-CI</h2>
-                            <p class="text-gray-400 text-base md:text-lg">Contrôle Technique Véhicules</p>
-                        </div>
+            <div class="text-center">
+                <div class="flex flex-col items-center mb-8">
+                    <div class="primary-bg text-white p-3 rounded-lg mb-4">
+                        <i class="fas fa-car text-2xl"></i>
                     </div>
-                    <p class="text-gray-400 max-w-md text-base md:text-lg text-center sm:text-left">Centre de contrôle technique agréé pour véhicules légers et poids lourds à Anyama, Côte d'Ivoire.</p>
+                    <h2 class="text-2xl font-bold mb-2">RECTA-CI</h2>
+                    <p class="text-gray-400">Contrôle Technique Véhicules</p>
                 </div>
                 
-                <div class="text-center md:text-right mt-8 md:mt-0">
-                    <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">Services rapides et fiables</h3>
-                    <div class="text-3xl md:text-4xl font-bold accent-color mb-2 md:mb-3">En 25 minutes</div>
-                    <p class="text-gray-400 text-base md:text-lg">Votre contrôle technique effectué avec précision</p>
-                    <div class="flex justify-center md:justify-end space-x-4 md:space-x-6 mt-6 md:mt-8">
-                        <a href="https://web.facebook.com/profile.php?id=61561167817225" class="w-12 h-12 md:w-14 md:h-14 primary-bg rounded-full flex items-center justify-center hover:bg-orange-600 transition shadow-lg hover:shadow-xl hover:scale-110">
-                            <i class="fab fa-facebook-f text-lg md:text-xl"></i>
-                        </a>
-                        <a href="https://cbl.link/jr2nVVz" class="w-12 h-12 md:w-14 md:h-14 success-bg rounded-full flex items-center justify-center hover:bg-green-600 transition shadow-lg hover:shadow-xl hover:scale-110">
-                            <i class="fab fa-whatsapp text-lg md:text-xl"></i>
-                        </a>
-                        <a href="mailto:info@rectaci.com" class="w-12 h-12 md:w-14 md:h-14 accent-bg rounded-full flex items-center justify-center hover:bg-amber-500 transition shadow-lg hover:shadow-xl hover:scale-110">
-                            <i class="fas fa-envelope text-lg md:text-xl"></i>
-                        </a>
-                    </div>
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold mb-4">Services rapides et fiables</h3>
+                    <div class="text-2xl font-bold accent-color mb-2">En 25 minutes</div>
+                    <p class="text-gray-400">Votre contrôle technique effectué avec précision</p>
                 </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-8 md:mt-12 pt-6 md:pt-10 text-center text-gray-400">
-                <p class="text-base md:text-lg">&copy; 2026 RECTA-CI - Tous droits réservés. | Conçu pour la sécurité routière en Côte d'Ivoire</p>
+                
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="https://web.facebook.com/profile.php?id=61561167817225" class="w-10 h-10 primary-bg rounded-full flex items-center justify-center hover:bg-orange-600 transition">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://cbl.link/jr2nVVz" class="w-10 h-10 success-bg rounded-full flex items-center justify-center hover:bg-green-600 transition">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="mailto:info@rectaci.com" class="w-10 h-10 accent-bg rounded-full flex items-center justify-center hover:bg-amber-500 transition">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                
+                <div class="border-t border-gray-800 pt-6 text-gray-400 text-sm">
+                    <p>&copy; 2026 RECTA-CI - Tous droits réservés.</p>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <button id="backToTop" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 primary-bg text-white p-3 md:p-4 rounded-full shadow-2xl hover:bg-orange-600 transition-all opacity-0 transform translate-y-10 hover:scale-110 z-40">
-        <i class="fas fa-arrow-up text-lg md:text-xl"></i>
+    <!-- Back to Top -->
+    <button id="backToTop" class="fixed bottom-6 right-6 primary-bg text-white p-3 rounded-full shadow-lg hover:bg-orange-600 transition z-40 opacity-0">
+        <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="js/index.js"></script>
-       
-    
+    <script src="js/index.js">
+      
+    </script>
 </body>
 </html>
